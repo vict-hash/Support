@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Support</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ff9ecf, #ffcce6);
+  font-family: Arial, sans-serif;
+}
+
+.wrapper {
+  text-align: center;
+}
+
+.top-text {
+  font-style: italic;
+  margin-bottom: 15px;
+  color: #cc0066;
+  font-size: 18px;
+}
+
+.container {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  width: 300px;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  resize: none;
+  margin-bottom: 15px;
+}
+
+button {
+  background: #ff4da6;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background: #e60073;
+}
+  </style>
+</head>
+<body>
+
+  <button onclick="playMusic()">Play Music</button>
+
+<audio id="bg-music" loop style="display:none;">
+  <source src="Moonlight_shadow_cut.mp3", type="audio/mpeg">
+</audio>
+
+<div class="wrapper">
+  <p class="top-text">Yeah, let's go. <br> I'm sorry girl for the pain I've caused <br> I'm sorry girl for the faith you've lost <br> Don't worry girl, it'll be alright <br> I'ma wait for you on the other side <br> oh But you know that my love is true <br> And I keep keep missing missing you <br> Heaven's calling gotta go <br> oh Moonlight shadow take me home</p>
+
+<div class="container">
+  
+  <textarea id="message" placeholder="Ide írja az üzenetét..."></textarea>
+
+  <button onclick="sendMessage()">Send</button>
+</div>
+</div>
+
+<script>
+
+function playMusic() {
+  const audio = document.getElementById("bg-music");
+  audio.play().then(() => {
+    console.log("Playing");
+  }).catch(err => {
+    console.error("Error:", err);
+  });
+}
+
+  const supabase = window.supabase.createClient(
+    "https://rrbmpjoeliuxwflmlvgs.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJyYm1wam9lbGl1eHdmbG1sdmdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzNzY2NTAsImV4cCI6MjA4OTk1MjY1MH0.c2jMuNlbQtlm7wh0MTs5n4Ten9gFXFIdDFSB5bHBkK4"
+  );
+
+
+  async function sendMessage() {
+    const text = document.getElementById("message").value;
+
+    if (!text) {
+      alert("Message is empty!");
+      return;
+    }
+
+    const { error } = await supabase
+      .from("messages")
+      .insert([{ content: text }]);
+
+    if (error) {
+      alert("Error sending message");
+      console.error(error);
+    } else {
+      alert("Message sent!");
+      document.getElementById("message").value = "";
+    }
+  }
+</script>
+
+</body>
+</html>
