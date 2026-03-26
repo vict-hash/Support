@@ -25,6 +25,13 @@ body {
   font-size: 18px;
 }
 
+.bottom-text {
+  font-style: bold;
+  margin-bottom: 15px;
+  color: #cc0066;
+  font-size: 20px;
+}
+
 .container {
   background: white;
   padding: 25px;
@@ -72,8 +79,9 @@ button:hover {
   
   <textarea id="message" placeholder="Ide írja az üzenetét..."></textarea>
 
-  <button onclick="sendMessage()">Küldés</button>
+  <button onclick="sendMessage()">Send</button>
 </div>
+<p class="bottom-text">Obviously an april fools joke</p>
 </div>
 
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
@@ -103,7 +111,7 @@ document.addEventListener("click", () => {
     const text = textarea.value;
 
     if (!text) {
-      alert("Üres a mező!");
+      alert("Message is empty!");
       return;
     }
 
@@ -118,7 +126,7 @@ document.addEventListener("click", () => {
       alert("Error sending message");
     } else {
       textarea.value = "";
-      alert("Köszönjük üzenetét!")
+      alert("Message sent!")
     }
   }
 </script>
