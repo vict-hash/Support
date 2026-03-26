@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Support</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <style>
 body {
   margin: 0;
@@ -61,8 +60,9 @@ button:hover {
 </head>
 <body>
 
-<audio id="bg-music" loop style="display:none;">
-  <source src="Moonlight_shadow_cut.mp3", type="audio/mpeg">
+
+<audio id="bg-music" loop>
+  <source src="Moonlight_shadow_cut.mp3" type="audio/mpeg">
 </audio>
 
 <div class="wrapper">
@@ -76,32 +76,49 @@ button:hover {
 </div>
 </div>
 
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
 <script>
 
-  const supabase = window.supabase.createClient(
+const music = document.getElementById("bg-music");
+
+document.addEventListener("click", () => {
+  if (music.paused) {
+    music.play().catch(err => console.log("Playback blocked:", err));
+  }
+}, { once: true });
+
+  const { createClient } = supabase;
+
+  const client = createClient(
     "https://rrbmpjoeliuxwflmlvgs.supabase.co",
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJyYm1wam9lbGl1eHdmbG1sdmdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzNzY2NTAsImV4cCI6MjA4OTk1MjY1MH0.c2jMuNlbQtlm7wh0MTs5n4Ten9gFXFIdDFSB5bHBkK4"
   );
 
 
   async function sendMessage() {
-    const text = document.getElementById("message").value;
+    console.log("Clicked");
+
+    const textarea = document.getElementById("message")
+    const text = textarea.value;
 
     if (!text) {
       alert("Message is empty!");
       return;
     }
 
-    const { error } = await supabase
+    const { data, error } = await client
       .from("messages")
       .insert([{ content: text }]);
 
+    console.log(data, error);
+
+
     if (error) {
       alert("Error sending message");
-      console.error(error);
     } else {
-      alert("Message sent!");
-      document.getElementById("message").value = "";
+      textarea.value = "";
+      alert("Message sent!")
     }
   }
 </script>
