@@ -81,7 +81,7 @@ button:hover {
 
   <button onclick="sendMessage()">Send</button>
 </div>
-<p class="bottom-text">Obviously an april fools joke</p>
+<p class="bottom-text">This website was created as an April fools joke!</p>
 </div>
 
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
@@ -111,7 +111,7 @@ document.addEventListener("click", () => {
     const text = textarea.value;
 
     if (!text) {
-      alert("Message is empty!");
+      alert("Üres a mező! Kérjük írjon be valamit!");
       return;
     }
 
@@ -126,7 +126,7 @@ document.addEventListener("click", () => {
       alert("Error sending message");
     } else {
       textarea.value = "";
-      alert("Message sent!")
+      alert("Köszönjük szépen üzenetét!")
     }
   }
 </script>
